@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' auto-termination-delay='28' requires-full-environment='true' display-mode='rendered'>
+    <pages>
+        <page name='Home'/>
+        <page name='newSyntax'/>
+        <page name='errorHandling'/>
+        <page name='availabilityCheck'/>
+        <page name='protocolExtension'/>
+        <page name='thePointer'/>
+        <page name='generics'/>
+        <page name='paradigm'/>
+        <page name='gists'/>
+        <page name='oc2swift'/>
+    </pages>
+</playground>

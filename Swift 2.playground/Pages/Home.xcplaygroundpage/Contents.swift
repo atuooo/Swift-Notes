@@ -9,8 +9,9 @@
 
 ## The Basic
 
-- [Pointer in Swift](thePointer)
+- [Closure](closure)
 - [Generics](generics)
+- [Pointer in Swift](thePointer)
 - [Programming Paradigm](paradigm)
 - [From Objective-C To Swift](oc2swift)
 - [Gists](gists)

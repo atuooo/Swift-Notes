@@ -21,7 +21,7 @@ var bInt = 4
 swapTwoInts(&aInt, b: &bInt)
 
 // 使用泛型可以交换任意类型的数据
-func swapTwoValue<T>(inout a: T, inout _ b: T) { /// ??? T? why not C?
+func swapTwoValue<T>(inout a a: T, inout _ b: T) { /// ??? T? why not C?
     let temporaryA = a
     a = b
     b = temporaryA
@@ -29,7 +29,7 @@ func swapTwoValue<T>(inout a: T, inout _ b: T) { /// ??? T? why not C?
 
 var aString = "I'm A"
 var bString = "I'm B"
-swapTwoValue(&aString, &bString) /// 定义时可以使用 _ 来省略第二个参数名
+swapTwoValue(a: &aString, &bString) /// 定义时可以使用 _ 来省略第二个参数名 Or 在第一个参数名前加 a 来显示
 
 /*:
 Generic Types
@@ -70,7 +70,7 @@ Type Constraints
 类型约束指定了一个必须继承自指定类的类型参数，或者遵循一个特定的协议或协议构成。
 */
 /// 任何 T 类型都遵循 Equatable 协议
-func findIndex<T: Equatable>(array: [T], _ valueToFind: T) -> Int? {
+func findIndex<T: Equatable>(array array: [T], _ valueToFind: T) -> Int? {
     for (index, value) in array.enumerate() {
         if value == valueToFind {
             return index
@@ -79,8 +79,8 @@ func findIndex<T: Equatable>(array: [T], _ valueToFind: T) -> Int? {
     return nil
 }
 
-let doubleIndex = findIndex([3.14, 0.1, 0.25], 9.3) // nil
-let stringIndex = findIndex(["A", "B", "C"], "C")   // 2
+let doubleIndex = findIndex(array: [3.14, 0.1, 0.25], 9.3) // nil
+let stringIndex = findIndex(array: ["A", "B", "C"], "C")   // 2
 
 /*:
 Associated Types

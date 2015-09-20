@@ -6,12 +6,10 @@
 
 /*:
     Questions:
-- 为什么用扩展，直接写在协议里不好么 ？
+- 为什么用扩展，直接写在协议里不好么 ？ -> 楼下有解答
 */
 
 import Foundation
-
-var a = 10
 /*:
 使用扩展协议的方式可以为遵循者提供方法或属性的实现。通过这种方式，可以让你无需在每个遵循者中都实现一次，无需使用全局函数，你可以通过扩展协议的方式进行定义。
 */
@@ -56,7 +54,7 @@ extension Container {
     
     // 在协议扩展中提供了 此方法，就不用再每一个类别中实现
     func randomItem() -> String {
-//: ??? 为什么在库函数里找不到 arc4random_uniform() 　　　arc4random_addrandom()怎么用
+// ??? 为什么在库函数里找不到 arc4random_uniform() 　　　arc4random_addrandom()怎么用
         let randomIndex = Int(arc4random_uniform(UInt32(items.count)))
 //        let randomIndex1 = Int(arc4random_addrandom(&a, UInt32(items.count)))
         return items[randomIndex]

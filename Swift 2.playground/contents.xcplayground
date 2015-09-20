@@ -11,5 +11,8 @@
         <page name='paradigm'/>
         <page name='gists'/>
         <page name='oc2swift'/>
+        <page name='closure'/>
+        <page name='ARC'/>
+        <page name='SRClosure'/>
     </pages>
 </playground>

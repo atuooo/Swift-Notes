@@ -52,7 +52,6 @@ let favoriteSnacks = [
     "Eve":  "Pretzels"
 ]
 
-var dic = Dictionary()
 //: 当调用一个抛出函数时，在前面加上 try。后面的代码将不会执行
 func buyFavoriteSnack(person: String) throws {
     let snackName = favoriteSnacks[person] ?? "Candy Bar"

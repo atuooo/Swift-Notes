@@ -9,6 +9,7 @@
 
 ## The Basic
 
+- [enum](enum)
 - [Closure](closure)
 - [Generics](generics)
 - [Pointer in Swift](thePointer)

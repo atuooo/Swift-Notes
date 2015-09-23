@@ -14,5 +14,7 @@
         <page name='closure'/>
         <page name='ARC'/>
         <page name='SRClosure'/>
+        <page name='enum'/>
+        <page name='questions'/>
     </pages>
 </playground>

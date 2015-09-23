@@ -3,9 +3,24 @@
 import Foundation
 import Darwin
 
-/**
-* 好像没什么特别的
-*/
+/// 把一个负整数转换成一个无符号的整数
+UInt(bitPattern: -3)
+
+//: 计算数组中特殊值的个数
+/// 在Swift 2.0 中，泛类型可以使用类型约束条件被强制扩展。但是假如这个泛类型不满足这个类型的约束条件，那么这个扩展方法既不可见也无法调用
+extension Array where Element: Comparable { // 它使用了< 和==运算符，他们限制着T（占位类型）的实际类型，也就是说T必须遵循Comparable协议
+    func countUniques() -> Int {
+        let sorted = sort(<)
+        let initial: (Element?, Int) = (.None, 0)
+        let reduced = sorted.reduce(initial) { ($1, $0.0 == $1 ? $0.1 : $0.1 + 1) }
+        return reduced.1
+    }
+}
+
+let array = [1, 1, 2, 3, 5, 5]
+array.countUniques()    // return 4
+
+//: 好像没什么特别的
 enum Error: ErrorType {case Unlucky}
 
 func myFailableFunction() throws -> String {
@@ -17,9 +32,8 @@ func myFailableFunction() throws -> String {
 let result = (try myFailableFunction()) ?? "Unlucky"
 print(result)
 
-/**
-* 快速筛选
-*/
+
+//: 快速筛选
 let oldArray = [1,2,3,4,5,6,7,8,9,10]
 let newArray = oldArray.filter({$0 > 4}) // 函数式编程
 newArray

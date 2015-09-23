@@ -83,4 +83,15 @@ incrementByTen()    // 30
 let alsoIncrementByTen = incrementByTen
 alsoIncrementByTen()    // 40
 
+//: 当闭包被声明的时候，抓捕列表就复制一份thing变量，所以被捕捉的值并没有改变，即使你给thing赋了一个新值
+var thing = "cars"
+
+let closure = { [thing] in
+    print("I love \(thing)")
+}
+
+thing = "airplanes"
+
+closure()   // I love cars
+
 //: [Back](@Home)

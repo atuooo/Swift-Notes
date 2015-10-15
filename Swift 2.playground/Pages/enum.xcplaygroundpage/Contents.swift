@@ -1,4 +1,7 @@
-//: [Previous](@previous)
+/*:
+## 枚举（Enumerations）
+The Swift Programming Language(2.0): [cn](http://wiki.jikexueyuan.com/project/swift/chapter2/08_Enumerations.html)
+*/
 
 import Foundation
 
@@ -55,13 +58,4 @@ enum ASCIIControlCharacter: Character {
 let tab = ASCIIControlCharacter.Tab.rawValue
 
 let possibleCharacter = ASCIIControlCharacter(rawValue: "d")    /// 返回的是一个可选的枚举成员
-
-
-
-
-
-
-
-
-
 //: [Back](@Home)

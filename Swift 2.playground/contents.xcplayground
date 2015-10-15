@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<playground version='6.0' target-platform='ios' auto-termination-delay='28' requires-full-environment='true' display-mode='rendered'>
+<playground version='6.0' target-platform='ios' auto-termination-delay='28' requires-full-environment='true' display-mode='raw'>
     <pages>
         <page name='Home'/>
         <page name='newSyntax'/>
@@ -16,5 +16,7 @@
         <page name='SRClosure'/>
         <page name='enum'/>
         <page name='questions'/>
+        <page name='layout'/>
+        <page name='initialization'/>
     </pages>
 </playground>

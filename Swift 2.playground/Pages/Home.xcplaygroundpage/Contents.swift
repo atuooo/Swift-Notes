@@ -12,8 +12,10 @@
 - [enum](enum)
 - [Closure](closure)
 - [Generics](generics)
+- [Initialization](initialization)
 - [Pointer in Swift](thePointer)
 - [Programming Paradigm](paradigm)
+- [Layout](layout)
 - [From Objective-C To Swift](oc2swift)
 - [Gists](gists)
 

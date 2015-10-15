@@ -3,6 +3,13 @@
 import Foundation
 
 /*:
+##### Self 的使用
+请避免在Swift中使用self，因为我们不需要使用self来访问一个对象的属性或调用它的方法。
+
+唯一需要使用的场景是在类或结构体的构造器中。你可以使用self来区分传入的参数和类/结构体的属性.
+*/
+
+/*:
 ##### 哪些情况下你不得不使用隐式拆包？说明原因。
 1、对象属性在初始化的时候不能nil,否则不能被初始化。典型的例子是Interface Builder outlet类型的属性，它总是在它的拥有者初始化之后再初始化。在这种特定的情况下，假设它在Interface Builder中被正确的配置——outlet被使用之前，保证它不为nil。
 
@@ -73,7 +80,6 @@ indirect 关键值可以允许递归枚举，代码如下：
 enum List{
 indirect case Cons(T, List)
 }
-
 */
 
 //: [Back](@Home)

@@ -34,7 +34,7 @@ if case 0...49 = examResult {       // 为什么这么写 enum ？
     print("Pass!")
 }
 
-//: if ccase 模式匹配
+//: if case 模式匹配
 let userInfo = (id: "atuoOo", name: "atuoOo", age: 18, email: "aaatuooo@gmail.com")
 
 if case (_, _, 0..<18, _) = userInfo {
@@ -77,9 +77,9 @@ for _ in 0...3 {
     print("hello")
 }
 
-for index in stride(from: 1, through: 5, by: 2) {
-    print(index)
-}   // through是包括5
+//for index in stride(from: 1, through: 5, by: 2) {
+//    print(index)
+//}   // through是包括5
 
 let dictionary = ["firstName": "Mango", "lastName": "Fang"]
 for (key, value) in dictionary {

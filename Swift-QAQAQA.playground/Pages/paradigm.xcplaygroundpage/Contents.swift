@@ -50,7 +50,7 @@ let immutable = 1
 
 /// 惰性求值：Swift默认是严格求值
 let num = 1...3
-let seq = lazy(num).map {
+let seq = num.map {
     (i: Int) -> Int in
     print("mapping \(i)")
     return i * 2

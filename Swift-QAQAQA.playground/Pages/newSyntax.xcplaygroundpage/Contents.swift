@@ -7,7 +7,7 @@ import UIKit
 //: do-while -> repeat-while
 var i = 0
 repeat {
-    i++
+    i += 1
     print(i)
 } while i < 10
 
@@ -124,6 +124,114 @@ func ^^(lhs: Int, rhs: Int) -> Int {
 
 //: ???
 var draw: (CGContext)->() = { _ in () }
+
+//: Swift 2.2 [☞](https://swift.org/blog/swift-2-2-released/) cn: [☞](http://swift.gg/2016/03/23/swift-22-new-features/)
+/// SE-0001: Allow(most) keywords as argument labels:
+// https://github.com/apple/swift-evolution/blob/master/proposals/0001-keywords-as-argument-labels.md
+
+for i in 1.stride(to: 9, by: 2) {
+    print(i)    // 1 3 5 7
+}
+
+func addParameter(name: String, `inout`: Bool) { }
+var function : (String, `inout`: Bool) -> Void
+
+/// SE-0011: Replace typealias keyword with associatedtype for associated type declarations
+// https://github.com/apple/swift-evolution/blob/master/proposals/0011-replace-typealias-associated.md
+
+protocol Prot {
+    associatedtype Container : SequenceType
+    
+    // error: cannot declare type alias inside protocol, use protocol extension instead
+    //    typealias Element = Container.Generator.Element
+}
+
+extension Prot {
+    typealias Element = Container.Generator.Element
+}
+
+/// SE-0014: Constraining AnySequence.init
+// https://github.com/apple/swift-evolution/blob/master/proposals/0014-constrained-AnySequence.md
+
+/// SE-0015: Tuple comparison operators
+// https://github.com/apple/swift-evolution/blob/master/proposals/0015-tuple-comparison-operators.md
+
+let aTuple = ("I'm a", "tuple")
+let bTuple = ("I'm b", "tuple")
+
+if aTuple == bTuple {
+    print("matching")
+} else {
+    print("non-matching")   // non
+}
+
+/// SE-0020: Swift Language Version Build Configuration
+// https://github.com/apple/swift-evolution/blob/master/proposals/0020-if-swift-version.md
+
+#if swift(>=2.2)
+print("Running Swift 2.2 or later")
+#else
+    print("Running Swift 2.1 or earlier")
+#endif
+
+/// SE-0021: Naming Functions with Argument Labels
+// https://github.com/apple/swift-evolution/blob/master/proposals/0021-generalized-naming.md
+
+extension UIView {
+    func insertSubview(view: UIView, at index: Int) { }
+    func insertSubview(view: UIView, aboveSub siblingSubview: UIView) { }
+    func insertSubview(view: UIView, belowSub siblingSubview: UIView) { }
+}
+
+UIView.insertSubview(_:at:)
+UIView.insertSubview(_:aboveSub:)
+
+//let button = UIButton(type:) // error: use of unresolved identifier 'UIButton(type:)'
+let buttonFactory = UIButton.init(type:)   // 初始化的引用，不是初始化
+buttonFactory(type: .Custom)
+
+// error: ↓ type 'NSDictionary' has no member 'insertSubview(_:aboveSubview:)'
+//let getter = Selector(NSDictionary.insertSubview(_:aboveSubview:))  // // produces insertSubview:aboveSubview:.
+
+///SE-0022: Referencing the Objective-C selector of a method
+// https://github.com/apple/swift-evolution/blob/master/proposals/0022-objc-selectors.md
+
+let sel = #selector(UIView.insertSubview(_:atIndex:))
+
+/// deprecate ++ & --
+//for var i = 1; i <= 10; i += 1 { } // deprecates
+for i in 1...10 { }
+for i in (1...10).reverse() { }
+
+/// deprecate tuple splat 
+func foo(a: Int, b: Int) { }
+foo(13, b: 25)
+
+let x = (1, b: 2)
+//foo(x)    // deprecate
+
+/// deprecate var parameter
+func sayHello(inout name: String, repeat repeatCount: Int) {
+    name = name.uppercaseString
+    for _ in 0 ..< repeatCount {
+        print(name)
+    }
+}
+var hello = "hello"
+sayHello(&hello, repeat: 2)
+
+/// add removeFirst()
+var arr = Array(1...5)
+arr.removeFirst()
+
+var nilArr = Array(count: 0, repeatedValue: 0)
+//nilArr.removeFirst() // error
+//nilArr.removeLast()  // error
+nilArr.popLast()       // nil
+
+/// rename debug id: #line, #function, #file
+print("This is on line \(__LINE__)") // old - deprecated
+print("This is on line \(#line)")
 
 //: [Back](Home)
 

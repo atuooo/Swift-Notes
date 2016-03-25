@@ -47,18 +47,28 @@ class Basket: Container {
     }
 }
 
+protocol SubContainter : Container {
+    func randomItem() -> String
+}
+
+extension Container {
+    func randomItem() -> String {
+        return "random"
+    }
+}
+
 extension Container {
     func numberOfItems() -> Int {
         return items.count
     }
     
     // 在协议扩展中提供了 此方法，就不用再每一个类别中实现
-    func randomItem() -> String {
-// ??? 为什么在库函数里找不到 arc4random_uniform() 　　　arc4random_addrandom()怎么用
-        let randomIndex = Int(arc4random_uniform(UInt32(items.count)))
-//        let randomIndex1 = Int(arc4random_addrandom(&a, UInt32(items.count)))
-        return items[randomIndex]
-    }
+//    func randomItem() -> String {
+//// ??? 为什么在库函数里找不到 arc4random_uniform() 　　　arc4random_addrandom()怎么用
+//        let randomIndex = Int(arc4random_uniform(UInt32(items.count)))
+////        let randomIndex1 = Int(arc4random_addrandom(&a, UInt32(items.count)))
+//        return items[randomIndex]
+//    }
 }
 
 var container: Container = ToolBox()

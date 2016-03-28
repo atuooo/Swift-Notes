@@ -171,7 +171,7 @@ if aTuple == bTuple {
 #if swift(>=2.2)
 print("Running Swift 2.2 or later")
 #else
-    print("Running Swift 2.1 or earlier")
+print("Running Swift 2.1 or earlier")
 #endif
 
 /// SE-0021: Naming Functions with Argument Labels

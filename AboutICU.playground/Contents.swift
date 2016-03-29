@@ -34,3 +34,4 @@ latin.stringByApplyingTransform(NSStringTransformLatinToKatakana, reverse: false
     "NFKC", reverse: false)
 
 
+

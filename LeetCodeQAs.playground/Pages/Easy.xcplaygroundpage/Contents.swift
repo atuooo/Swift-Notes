@@ -67,4 +67,22 @@ func maxDepth(root: TreeNode?) -> Int {
     }
 }
 
+/*:
+ ## Invert a binary tree
+ This problem was inspired by this original [tweet](https://twitter.com/mxcl/status/608682016205344768) by Max Howell: 😳
+ 
+ Google: 90% of our engineers use the software you wrote (Homebrew), but you can’t invert a binary tree on a whiteboard so fuck off.
+ */
+
+func invertTree(root: TreeNode?) -> TreeNode? {
+    if let root = root {
+        let tree: TreeNode? = TreeNode(root.val)
+        tree!.left  = invertTree(root.right)
+        tree!.right = invertTree(root.left)
+        return tree
+    } else {
+        return root
+    }
+}
+
 

@@ -26,7 +26,7 @@ Given num = 38, the process is like: 3 + 8 = 11, 1 + 1 = 2. Since 2 has only one
 Follow up:
 Could you do it without any loop/recursion in O(1) runtime?
 */
-
+// 单纯的算术
 func addDigits(num: Int) -> Int {
     if num == 0 {
         return 0
@@ -42,7 +42,7 @@ func addDigits(num: Int) -> Int {
  
  The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
  */
-
+// 求二叉树的深度
 // Definition for a binary tree node.
 public class TreeNode {
     public var val: Int
@@ -73,7 +73,7 @@ func maxDepth(root: TreeNode?) -> Int {
  
  Google: 90% of our engineers use the software you wrote (Homebrew), but you can’t invert a binary tree on a whiteboard so fuck off.
  */
-
+// 翻转二叉树
 func invertTree(root: TreeNode?) -> TreeNode? {
     if let root = root {
         let tree: TreeNode? = TreeNode(root.val)
@@ -85,4 +85,25 @@ func invertTree(root: TreeNode?) -> TreeNode? {
     }
 }
 
-
+/*:
+ ## Move Zeroes
+ Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+ 
+ For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].
+ 
+ Note:
+ You must do this in-place without making a copy of the array.
+ Minimize the total number of operations.
+ */
+// 将数组里面的 0 移到最后面，其余数的位置关系不变
+func moveZeroes(inout nums: [Int]) {
+    var j = 0
+    for i in 0 ..< nums.count {
+        if nums[i] != 0 {
+            let temp = nums[i]
+            nums[i] = nums[j]
+            nums[j] = temp
+            j += 1
+        }
+    }
+}

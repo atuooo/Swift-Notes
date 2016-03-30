@@ -13,7 +13,7 @@ For example, given [1,2,3,4], return [24,12,8,6].
 Follow up:
 Could you solve it with constant space complexity? (Note: The output array does not count as extra space for the purpose of space complexity analysis.)
 */
-
+// 重点是不能用除法且复杂度在 O(n)
 func productExceptSelf(nums: [Int]) -> [Int] {
     let len = nums.count
     var output = Array(count: len, repeatedValue: 0)

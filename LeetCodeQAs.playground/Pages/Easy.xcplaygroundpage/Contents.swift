@@ -107,3 +107,22 @@ func moveZeroes(inout nums: [Int]) {
         }
     }
 }
+
+/*:
+ ## Same Tree
+ Given two binary trees, write a function to check if they are equal or not.
+ 
+ Two binary trees are considered equal if they are structurally identical and the nodes have the same value.
+ */
+func isSameTree(p: TreeNode?, _ q: TreeNode?) -> Bool {
+    if p == nil && q == nil {
+        return true         // 空树相等
+    }
+    
+    if (p == nil && q != nil) || (p != nil && q == nil) || (p?.val != q?.val) {
+        return false        // 一个为空 or 节点值不等 则不相等
+    }
+    
+    // 判断子树是否相等
+    return isSameTree(p?.left, q?.left) && isSameTree(p?.right, q?.right)
+}

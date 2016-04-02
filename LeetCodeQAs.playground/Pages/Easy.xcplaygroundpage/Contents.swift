@@ -126,3 +126,33 @@ func isSameTree(p: TreeNode?, _ q: TreeNode?) -> Bool {
     // 判断子树是否相等
     return isSameTree(p?.left, q?.left) && isSameTree(p?.right, q?.right)
 }
+
+/*:
+ ## Valid Anagram 
+ Given two strings s and t, write a function to determine if t is an anagram of s.
+ 
+ For example,
+ s = "anagram", t = "nagaram", return true.
+ s = "rat", t = "car", return false.
+ 
+ Note:
+ You may assume the string contains only lowercase alphabets.
+ 
+ Follow up:
+ What if the inputs contain unicode characters? How would you adapt your solution to such case?
+ */
+// 是不是有点投机取巧？
+func isAnagram(s: String, _ t: String) -> Bool {
+    let ss = s.characters.sort(>)
+    let ts = t.characters.sort(>)
+    
+    if ss == ts {
+        return true
+    } else {
+        return false
+    }
+}
+
+isAnagram("ad", "abc!")
+
+//print("abc!".characters.)

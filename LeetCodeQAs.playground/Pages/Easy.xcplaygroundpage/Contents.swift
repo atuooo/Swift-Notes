@@ -155,4 +155,54 @@ func isAnagram(s: String, _ t: String) -> Bool {
 
 isAnagram("ad", "abc!")
 
-//print("abc!".characters.)
+/*:
+ ## Excel Sheet Column Title
+ Given a positive integer, return its corresponding column title as appear in an Excel sheet.
+ 
+ For example:
+` 
+    1  -> A
+    2  -> B
+    3  -> C
+    ...
+    26 -> Z
+    27 -> AA
+    28 -> AB
+`
+ */
+func convertToTitle(n: Int) -> String {
+    var out = ""
+    var num = n
+    while num > 0 {
+        // 使用 String(format: _,_) Leetcode会报错：Current stack trace
+        out = "\(UnicodeScalar((num-1) % 26 + 65))" + out
+        num = (num - 1) / 26
+    }
+    
+    return out
+}
+
+/*:
+ ## Excel Sheet Column Number
+ Related to question Excel Sheet Column Title
+ 
+ Given a column title as appear in an Excel sheet, return its corresponding column number.
+ 
+ For example:
+`
+  A -> 1
+  B -> 2 
+  ...
+  Z -> 26 
+ AA -> 27
+ AB -> 28
+`
+ */
+func titleToNumber(s: String) -> Int {
+    var out = 0
+    for unicode in s.unicodeScalars {
+        out = out * 26 + Int(unicode.value) - 64
+    }
+    
+    return out
+}

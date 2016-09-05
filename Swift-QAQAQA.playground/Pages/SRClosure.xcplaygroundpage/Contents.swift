@@ -11,7 +11,7 @@ class HTMLElement {
     let text: String?
     
     // 在默认的闭包中可以使用self，因为只有当初始化完成以及self确实存在后，才能访问 lazy 属性
-    lazy var asHTML: Void -> String = {
+    lazy var asHTML: () -> String = {
         if let text = self.text {
             return "<\(self.name)>\(text)</\(self.name)>"
         } else {
@@ -65,7 +65,7 @@ class HTMLElementWithUnowned {
     let name: String
     let text: String?
     
-    lazy var asHTML: Void -> String = {
+    lazy var asHTML: () -> String = {
         [unowned self] in                   // 用无主引用而不是强引用来捕获self
         if let text = self.text {
             return "<\(self.name)>\(text)</\(self.name)>"

@@ -5,63 +5,44 @@ The Swift Programming Language(2.0): [cn](http://wiki.jikexueyuan.com/project/sw
 import Foundation
 //: Closure Expressions
 // 闭包函数
-let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+var names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+
 func backwards(s1: String, s2: String) -> Bool {
     return s1 > s2
 }
-var reversed = names.sort(backwards)
+
+//var reversed = names.sort(backwards)
 
 // closure expression syntax
-reversed = names.sort( {
-                (s1: String, s2: String) -> Bool in
-                    return s1 > s2 })
+names.sort{ (s1, s2) -> Bool in
+    return s1 > s2
+}
 
 // Inferring Type From Context
-reversed = names.sort( { s1, s2 in return s1 > s2 })
+names.sort{ s1, s2 in return s1 > s2 }
 
 // Implicit return from Single-Expression closures
-reversed = names.sort( { s1, s2 in s1 > s2 })
+names.sort{ s1, s2 in s1 > s2 }
 
 // Shorthand Argument Names
-reversed = names.sort( { $0 > $1 } )
+names.sort{ $0 > $1 }
 
 // Operator Functions
-reversed = names.sort( > )
+names.sort(by: >)
+
 
 //: Trailing Closures
-reversed = names.sort{
+names.sort{
     (s1, s2) -> Bool in
     return s1 > s2
 }
 
-reversed = names.sort(){ $0 > $1 }
-reversed = names.sort{ $0 > $1 }
-
-// map(_:)
-let digitNames = [
-    0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
-    5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
-]
-let numbers = [0, 16, 58, 510]
-
-let strings = numbers.map {
-    (var number) -> String in
-    var output = ""
-    while number > 0 {
-        output = digitNames[number % 10]! + output
-        number /= 10
-    }
-    return output
-}
-
-func someFunctionThatTakesAClosure(closure: () -> Void) {
-    // function body goes here
-}
+names.sort(){ $0 > $1 }
+names.sort{ $0 > $1 }
 
 /*: 
 ### Point-> Capturing Value
-> **note:** 
-　If you assign a closure to a property of a class instance, and the closure captures that instance by referring to the instance or its members, you will create a _strong reference cycle_ between the closure and the instance. Swift uses capture lists to break these strong reference cycles. For more information, see [Strong Reference Cycles for Closures](SRClosure).
+> If you assign a closure to a property of a class instance, and the closure captures that instance by referring to the instance or its members, you will create a _strong reference cycle_ between the closure and the instance. Swift uses capture lists to break these strong reference cycles. For more information, see [Strong Reference Cycles for Closures](SRClosure).
 */
 func makeIncrementer(forIncrement amount: Int) -> () -> Int {
     var runningTotal = 0
@@ -93,5 +74,25 @@ let closure = { [thing] in
 thing = "airplanes"
 
 closure()   // I love cars
+
+//: @autoclosure & ??
+func printSth(_ toPrint: @autoclosure () -> String) {
+    print(toPrint())
+}
+
+printSth("I'm auto closure")
+
+Int("invalid-input") ?? 233 // ?? 👇
+
+func ??<T>(optional: T?, defaultValue: @autoclosure () -> T) -> T {
+    switch optional {
+    case .some(let value):
+        return value
+    case .none:
+        return defaultValue()
+    }
+}
+
+Int("invalid-input") ?? 2333
 
 //: [Back](@Home)

@@ -9,7 +9,7 @@ var test = [12, 2, 56, 23, 45, 7, 3, 19, 11]
  */
 
 func bubbleSort(input: [Int]) -> [Int] {
-//    return input.sorted(by: >)    // which algorithm ? [👉](https://github.com/apple/swift/tree/master/docs)
+//    return input.sorted(by: >)    // which algorithm ? [👉](https://github.com/apple/swift/tree/master/docs) [Compare](http://stackoverflow.com/questions/24101718/swift-performance-sorting-arrays?rq=1)
     
     var output = input
     

@@ -3,7 +3,8 @@
 The Swift Programming Language(2.0): [cn](http://wiki.jikexueyuan.com/project/swift/chapter2/07_Closures.html) | [en](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Closures.html#//apple_ref/doc/uid/TP40014097-CH11-ID94)
 */
 import Foundation
-//: Closure Expressions
+import UIKit
+
 // 闭包函数
 var names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 
@@ -11,7 +12,7 @@ func backwards(s1: String, s2: String) -> Bool {
     return s1 > s2
 }
 
-//var reversed = names.sort(backwards)
+var reversed = names.sorted(by: backwards)
 
 // closure expression syntax
 names.sort{ (s1, s2) -> Bool in
@@ -64,7 +65,7 @@ incrementByTen()    // 30
 let alsoIncrementByTen = incrementByTen
 alsoIncrementByTen()    // 40
 
-//: 当闭包被声明的时候，抓捕列表就复制一份thing变量，所以被捕捉的值并没有改变，即使你给thing赋了一个新值
+//: > 当闭包被声明的时候，抓捕列表就复制一份thing变量，所以被捕捉的值并没有改变，即使你给thing赋了一个新值
 var thing = "cars"
 
 let closure = { [thing] in
@@ -75,7 +76,10 @@ thing = "airplanes"
 
 closure()   // I love cars
 
-//: @autoclosure & ??
+/*:
+ ## @autoclosure & ??
+ */
+
 func printSth(_ toPrint: @autoclosure () -> String) {
     print(toPrint())
 }
@@ -84,6 +88,7 @@ printSth("I'm auto closure")
 
 Int("invalid-input") ?? 233 // ?? 👇
 
+//: > [Why not use T instead of @autoclosure](http://stackoverflow.com/questions/39349127/why-the-definition-of-operator-use-autoclosure/39350082#39350082)
 func ??<T>(optional: T?, defaultValue: @autoclosure () -> T) -> T {
     switch optional {
     case .some(let value):
@@ -94,5 +99,19 @@ func ??<T>(optional: T?, defaultValue: @autoclosure () -> T) -> T {
 }
 
 Int("invalid-input") ?? 2333
+
+infix operator ??? {
+    associativity left
+    precedence 160
+}
+
+func ???<T>(optional: T?, defaultValue: T) -> T {
+    switch optional {
+    case .some(let value):
+        return value
+    case .none:
+        return defaultValue
+    }
+}
 
 //: [Back](@Home)

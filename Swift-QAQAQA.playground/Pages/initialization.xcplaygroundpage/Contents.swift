@@ -316,7 +316,7 @@ struct Checkerboard {
 }
 
 let board = Checkerboard()
-print(board.squareIsBlackAtRow(0, column: 1))
-print(board.squareIsBlackAtRow(9, column: 9))
+print(board.squareIsBlackAtRow(row: 0, column: 1))
+print(board.squareIsBlackAtRow(row: 9, column: 9))
 
 //: [Back](@Home)

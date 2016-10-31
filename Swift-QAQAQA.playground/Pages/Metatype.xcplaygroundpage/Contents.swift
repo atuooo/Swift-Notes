@@ -32,7 +32,7 @@ myFunc
 let cls3 = SomeClass.self   // .self a singleton instance representing the SomeClass Type.
 cls3.doSth()
 
-let cls4 = cls2.dynamicType
+let cls4 = type(of: cls2)
 cls4.doSth()
 
 class SomeBaseClass {
@@ -48,9 +48,9 @@ class SomeSubClass: SomeBaseClass {
 let someInstance: SomeBaseClass = SomeSubClass()
 /// someInstance 在编译期是 SomeBaseClass 类型，(怎么知道instance在编译时时的type）
 /// 但是在运行期则是 SomeSubClass 类型
-someInstance.dynamicType.printClassName()
+type(of: someInstance).printClassName()
 
-if someInstance.dynamicType === SomeSubClass.self {
+if type(of: someInstance) === SomeSubClass.self {
     print("The dynamic type of someInstance is SomeBaseCass")
 } else {
     print("The dynamic type of someInstance isn't SomeBaseClass")
@@ -93,25 +93,22 @@ func printPet(dog: Dog) {
     print("Bark")
 }
 
-printPet(Cat())
-printPet(Dog())
-printPet(Pet())
+printPet(cat: Cat())
 
 func printThem(pet: Pet, cat: Cat) {
-    printPet(pet)
-    printPet(cat)
+    printPet(cat: Cat())
 }
 
-printThem(Dog(), cat: Cat())
+printThem(pet: Dog(), cat: Cat())
 
 func printThemm(pet: Pet, cat: Cat) {
     if let aCat = pet as? Cat {
-        printPet(aCat)
+        printPet(cat: aCat)
     } else if let aDog = pet as? Dog {
-        printPet(aDog)
+        printPet(dog: aDog)
     }
-    printPet(cat)
+    printPet(pet: pet)
 }
 
-printThemm(Dog(), cat: Cat())
+printThemm(pet: Dog(), cat: Cat())
 

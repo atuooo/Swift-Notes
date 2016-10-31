@@ -100,10 +100,13 @@ func ??<T>(optional: T?, defaultValue: @autoclosure () -> T) -> T {
 
 Int("invalid-input") ?? 2333
 
-infix operator ??? {
-    associativity left
-    precedence 160
+precedencegroup ComparisonAssignmentPrecedence {
+    associativity: right
+    lowerThan: ComparisonPrecedence
+    higherThan: LogicalConjunctionPrecedence
 }
+
+infix operator ???: ComparisonAssignmentPrecedence
 
 func ???<T>(optional: T?, defaultValue: T) -> T {
     switch optional {

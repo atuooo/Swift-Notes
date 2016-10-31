@@ -6,7 +6,7 @@ The Swift Programming Language(2.0): [cn](http://wiki.jikexueyuan.com/project/sw
 import UIKit
 
 //: 错误用符合 ErrorType 协议的值表示
-enum VendingMachineError: ErrorType {
+enum VendingMachineError: Error {
     case InvalidSelection
     case InsufficientFunds(required: Double)
     case OutOfStock
@@ -38,7 +38,7 @@ func vend(itemNamed name: String) throws {
     if amountDeposited >= item.price {
         // Dispense the snack
         amountDeposited -= item.price
-        --item.count
+        item.count -= 1
         inventory[name] = item
     } else {
         let amountRequired = item.price - amountDeposited

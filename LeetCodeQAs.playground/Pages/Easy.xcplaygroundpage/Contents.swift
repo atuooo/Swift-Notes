@@ -57,7 +57,7 @@ public class TreeNode {
 }
 
 // 取左右子树的最大值, 然后 +1
-func maxDepth(root: TreeNode?) -> Int {
+func maxDepth(_ root: TreeNode?) -> Int {
     if let root = root {
         let left = maxDepth(root.left)
         let right = maxDepth(root.right)
@@ -74,7 +74,7 @@ func maxDepth(root: TreeNode?) -> Int {
  Google: 90% of our engineers use the software you wrote (Homebrew), but you can’t invert a binary tree on a whiteboard so fuck off.
  */
 // 翻转二叉树
-func invertTree(root: TreeNode?) -> TreeNode? {
+func invertTree(_ root: TreeNode?) -> TreeNode? {
     if let root = root {
         let tree: TreeNode? = TreeNode(root.val)
         tree!.left  = invertTree(root.right)
@@ -96,7 +96,7 @@ func invertTree(root: TreeNode?) -> TreeNode? {
  Minimize the total number of operations.
  */
 // 将数组里面的 0 移到最后面，其余数的位置关系不变
-func moveZeroes(inout nums: [Int]) {
+func moveZeroes(nums: inout [Int]) {
     var j = 0
     for i in 0 ..< nums.count {
         if nums[i] != 0 {
@@ -114,7 +114,7 @@ func moveZeroes(inout nums: [Int]) {
  
  Two binary trees are considered equal if they are structurally identical and the nodes have the same value.
  */
-func isSameTree(p: TreeNode?, _ q: TreeNode?) -> Bool {
+func isSameTree(_ p: TreeNode?, _ q: TreeNode?) -> Bool {
     if p == nil && q == nil {
         return true         // 空树相等
     }
@@ -124,7 +124,7 @@ func isSameTree(p: TreeNode?, _ q: TreeNode?) -> Bool {
     }
     
     // 判断子树是否相等
-    return isSameTree(p?.left, q?.left) && isSameTree(p?.right, q?.right)
+    return isSameTree(q?.left, p?.left) && isSameTree(p?.right, q?.right)
 }
 
 /*:
@@ -142,9 +142,9 @@ func isSameTree(p: TreeNode?, _ q: TreeNode?) -> Bool {
  What if the inputs contain unicode characters? How would you adapt your solution to such case?
  */
 // 是不是有点投机取巧？
-func isAnagram(s: String, _ t: String) -> Bool {
-    let ss = s.characters.sort(>)
-    let ts = t.characters.sort(>)
+func isAnagram(_ s: String, _ t: String) -> Bool {
+    let ss = s.characters.sorted(by: >)
+    let ts = t.characters.sorted(by: >)
     
     if ss == ts {
         return true
@@ -153,7 +153,7 @@ func isAnagram(s: String, _ t: String) -> Bool {
     }
 }
 
-isAnagram("ad", "abc!")
+isAnagram("abc!", "ad")
 
 /*:
  ## Excel Sheet Column Title

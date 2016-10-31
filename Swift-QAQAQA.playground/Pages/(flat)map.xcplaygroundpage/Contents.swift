@@ -62,7 +62,7 @@ let testDictionary = [
     "url": "http://swift.gg/2015/10/09/thinking-in-swift-2/"
 ]
 
-print(testDictionary.dynamicType)
+print(type(of: testDictionary))
 
 class ListDictionary {
     var icon: UIImage?
@@ -91,7 +91,7 @@ class ListDictionary {
     }
 }
 
-print(ListDictionary.listItemsFromDictionary(testDictionary).url)
+print(ListDictionary.listItemsFromDictionary(itemDictionary: testDictionary).url)
 
 
 class ListItem {
@@ -101,7 +101,7 @@ class ListItem {
     
     static func listItemsFromJSONData(jsonData: NSData?) -> [ListItem] {
         guard let nonNilJsonData = jsonData,
-            let json = try? NSJSONSerialization.JSONObjectWithData(nonNilJsonData, options: []),
+            let json = try? JSONSerialization.jsonObject(with: nonNilJsonData as Data, options: []),
             let jsonItems = json as? Array<NSDictionary>
             else {
                 // 倘若JSON序列化失败，或者转换类型失败

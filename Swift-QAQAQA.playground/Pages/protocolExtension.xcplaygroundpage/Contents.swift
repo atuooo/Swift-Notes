@@ -10,15 +10,7 @@
 */
 
 import Foundation
-/*:
-使用扩展协议的方式可以为遵循者提供方法或属性的实现。通过这种方式，可以让你无需在每个遵循者中都实现一次，无需使用全局函数，你可以通过扩展协议的方式进行定义。
-*/
-// 你可以使用扩张加入新功能至 String
-extension String {
-    func contains(find: String) -> Bool {
-        return self.rangeOfString(find) != nil
-    }
-}
+
 
 var testString = "Hello Word"
 testString.contains("Hello")

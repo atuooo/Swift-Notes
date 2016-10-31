@@ -8,12 +8,12 @@ struct RegexHelper {
     let regex: NSRegularExpression?
     
     init(_ pattern: String) {
-        regex = try! NSRegularExpression(pattern: pattern, options: .CaseInsensitive)
+        regex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
     }
     
     func match(input: String) -> Bool {
-        if let matches = regex?.matchesInString(input,
-            options: .ReportProgress,
+        if let matches = regex?.matches(in: input,
+            options: .reportProgress,
             range: NSMakeRange(0, input.characters.count)) {
                 return matches.count > 0
         } else {
@@ -27,7 +27,7 @@ let mailPattern =
 let matcher = RegexHelper(mailPattern)
 let maybeMailAddress = "onev@onevcat.com"
 
-if matcher.match(maybeMailAddress) {
+if matcher.match(input: maybeMailAddress) {
     print("有效的邮箱地址")
 }
 
@@ -36,16 +36,17 @@ if matcher.match(maybeMailAddress) {
 func loadHTMLWithWord(word: String) {
     var urlString = "http://dict.cn/\(word)"
     //中文转义 
-    urlString = urlString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+    
+    urlString = urlString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
     
     let url = NSURL(string: urlString)
     
-    let request = NSURLRequest(URL: url!, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: 5.0)
+    let request = NSURLRequest(url: url! as URL, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 5.0)
     
-    let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { (data, response, error) -> Void in
+    let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) -> Void in
         //得到的data数据转换为字符串
-        let html = NSString.init(data: data!, encoding: NSUTF8StringEncoding)
-        let result: NSString = findAnswerInHTML(html!)
+        let html = NSString.init(data: data!, encoding: String.Encoding.utf8.rawValue)
+        let result: NSString = findAnswerInHTML(html: html!)
         print(result)
     }
     task.resume()
@@ -58,20 +59,21 @@ func findAnswerInHTML(html: NSString) -> NSString {
     //实例化正则表达式，需要指定两个选项
     //NSRegularExpressionCaseInsensitive  忽略大小写
     //NSRegularExpressionDotMatchesLineSeparators 让.能够匹配换行
-    let regex = try! NSRegularExpression(pattern: pattern, options: [.CaseInsensitive, .DotMatchesLineSeparators])
+    let regex = try! NSRegularExpression(pattern: pattern, options: [.caseInsensitive, .dotMatchesLineSeparators])
     
     //匹配出结果集
-    let checkResult = regex.firstMatchInString(html as String, options: .ReportCompletion, range: NSMakeRange(0, html.length))
+    let checkResult = regex.firstMatch(in: html as String, options: .reportCompletion, range: NSMakeRange(0, html.length))
     
     // 取出找到的内容. 数字分别对应第几个带括号(.*?), 取0时输出匹配到的整句
-    let result = html.substringWithRange((checkResult?.rangeAtIndex(2))!)
+    let result = html.substring(with: (checkResult?.rangeAt(2))!)
     
-    return result
+    return result as NSString
 }
 
 //
 var telefone = "+42 43 23123-2221"
-let range = telefone.rangeOfString("\\d{4,5}\\-?\\d{4}", options:.RegularExpressionSearch)
+let range = telefone.range(of: "\\d{4,5}\\-?\\d{4}", options: .regularExpression, range: nil, locale: nil)
+//let range = telefone.rangeOfString("\\d{4,5}\\-?\\d{4}", options:.RegularExpressionSearch)
 print("range \(range)")
 
 //: [Next](@next)

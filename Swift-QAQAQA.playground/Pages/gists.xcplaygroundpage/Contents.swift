@@ -10,8 +10,8 @@ UInt(bitPattern: -3)
 /// 在Swift 2.0 中，泛类型可以使用类型约束条件被强制扩展。但是假如这个泛类型不满足这个类型的约束条件，那么这个扩展方法既不可见也无法调用
 extension Array where Element: Comparable { // 它使用了< 和==运算符，他们限制着T（占位类型）的实际类型，也就是说T必须遵循Comparable协议
     func countUniques() -> Int {
-        let sorted = sort(<)
-        let initial: (Element?, Int) = (.None, 0)
+        let sorted = self.sorted(by: <)
+        let initial: (Element?, Int) = (.none, 0)
         let reduced = sorted.reduce(initial) { ($1, $0.0 == $1 ? $0.1 : $0.1 + 1) }
         return reduced.1
     }
@@ -21,15 +21,15 @@ let array = [1, 1, 2, 3, 5, 5]
 array.countUniques()    // return 4
 
 //: 好像没什么特别的
-enum Error: ErrorType {case Unlucky}
+enum MyError: Error {case Unlucky}
 
 func myFailableFunction() throws -> String {
     let success = arc4random_uniform(5)
-    if success == 0 { throw Error.Unlucky}
+    if success == 0 { throw MyError.Unlucky}
     return "Success"
 }
 
-let result = (try myFailableFunction()) ?? "Unlucky"
+let result = (try myFailableFunction()) 
 print(result)
 
 
@@ -54,23 +54,23 @@ var myvar3 = "Hans"
 
 //var classname = reflect(myvar0).summary   // ???
 
-print( "toString(myvar0.dynamicType) -> \(myvar0.dynamicType)")
-print( "toString(myvar1.dynamicType) -> \(myvar1.dynamicType)")
-print( "toString(myvar2.dynamicType) -> \(myvar2.dynamicType)")
-print( "toString(myvar3.dynamicType) -> \(myvar3.dynamicType)")
+print( "toString(myvar0.dynamicType) -> \(type(of: myvar0))")
+print( "toString(myvar1.dynamicType) -> \(type(of: myvar1))")
+print( "toString(myvar2.dynamicType) -> \(type(of: myvar2))")
+print( "toString(myvar3.dynamicType) -> \(type(of: myvar3))")
 
 print( "toString(Int.self)           -> \(Int.self)")
 print( "toString((Int?).self         -> \((Int?).self)")
 print( "toString(NSString.self)      -> \(NSString.self)")
 print( "toString(Array<String>.self) -> \(Array<String>.self)")
 
-print( "TypeName0 = \(_stdlib_getDemangledTypeName(myvar0))")
-print( "TypeName1 = \(_stdlib_getDemangledTypeName(myvar1))")
-print( "TypeName2 = \(_stdlib_getDemangledTypeName(myvar2))")
-print( "TypeName3 = \(_stdlib_getDemangledTypeName(myvar3))")
+//print( "TypeName0 = \(_stdlib_getDemangledTypeName(myvar0))")
+//print( "TypeName1 = \(_stdlib_getDemangledTypeName(myvar1))")
+//print( "TypeName2 = \(_stdlib_getDemangledTypeName(myvar2))")
+//print( "TypeName3 = \(_stdlib_getDemangledTypeName(myvar3))")
 
 //: Array: Separate components By String
-let keyString : NSString = "one two three four five"
-let keys : NSArray = keyString.componentsSeparatedByString(" ")
+let keyString = "one two three four five"
+let keys = keyString.components(separatedBy: " ")
 
 //: [Back](Home)

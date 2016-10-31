@@ -10,7 +10,7 @@ import Foundation
 //: Generic Functions
 /// 你可以灵活地创建不同类型的数组或字典
 // 只能交换 Int 类型
-func swapTwoInts(inout a: Int, inout b: Int) {
+func swapTwoInts( a: inout Int, b: inout Int) {
     let temporaryA = a
     a = b
     b = temporaryA
@@ -18,10 +18,10 @@ func swapTwoInts(inout a: Int, inout b: Int) {
 
 var aInt = 3    /// 只能定义为可变（var）类型
 var bInt = 4
-swapTwoInts(&aInt, b: &bInt)
+swapTwoInts(a: &aInt, b: &bInt)
 
 // 使用泛型可以交换任意类型的数据
-func swapTwoValue<T>(inout a a: T, inout _ b: T) { /// ??? T? why not C?
+func swapTwoValue<T>(a: inout T, _ b: inout T) { /// ??? T? why not C?
     let temporaryA = a
     a = b
     b = temporaryA
@@ -48,9 +48,9 @@ struct Stack<T> {
 }
 
 var stackOfStrings = Stack<String>()
-stackOfStrings.push("a")
-stackOfStrings.push("b")
-stackOfStrings.push("c")
+stackOfStrings.push(item: "a")
+stackOfStrings.push(item: "b")
+stackOfStrings.push(item: "c")
 print(stackOfStrings)   // a b c
 
 let fromTheTop = stackOfStrings.pop()   // c
@@ -70,8 +70,8 @@ Type Constraints
 类型约束指定了一个必须继承自指定类的类型参数，或者遵循一个特定的协议或协议构成。
 */
 /// 任何 T 类型都遵循 Equatable 协议
-func findIndex<T: Equatable>(array array: [T], _ valueToFind: T) -> Int? {
-    for (index, value) in array.enumerate() {
+func findIndex<T: Equatable>(array: [T], _ valueToFind: T) -> Int? {
+    for (index, value) in array.enumerated() {
         if value == valueToFind {
             return index
         }
@@ -88,7 +88,7 @@ Associated Types
 ![](associatedTypes.png)
 */
 protocol Container {
-    typealias ItemType  /// 关联类型: 不需要知道特定容器的类型就可以保留指定容器里的元素
+    associatedtype ItemType  /// 关联类型: 不需要知道特定容器的类型就可以保留指定容器里的元素
     mutating func append(item: ItemType)
     var count: Int { get }
     subscript(i: Int) -> ItemType { get }
@@ -106,7 +106,7 @@ struct StackWithTypealias<T>: Container {
     
     // conformance to the Container protocol
     mutating func append(item: T) { /// Swift 可以推断出被用作这个特定容器的 ItemType 的 T 的合适类型
-        self.push(item)
+        self.push(item: item)
     }
     var count: Int {
         return items.count
@@ -117,11 +117,11 @@ struct StackWithTypealias<T>: Container {
 }
 
 var stackOfInts = StackWithTypealias<Int>()
-stackOfInts.push(1)
-stackOfInts.push(2)
-stackOfInts.push(3)
+stackOfInts.push(item: 1)
+stackOfInts.push(item: 2)
+stackOfInts.push(item: 3)
 
-stackOfInts.append(4)
+stackOfInts.append(item: 4)
 stackOfInts.items
 stackOfInts.count
 stackOfInts[2]
@@ -136,10 +136,9 @@ extension Array: Container {
 /*:
 Where Clauses
 */
-func allItemMatch<
-    C1: Container, C2: Container
-    where C1.ItemType == C2.ItemType, C1.ItemType: Equatable>
-    (someContainer: C1, _ anotherContainer: C2) {
+func allItemMatch<C1: Container, C2: Container>
+    (_ someContainer: C1, _ anotherContainer: C2)
+    where C1.ItemType == C2.ItemType, C1.ItemType: Equatable {
         
         guard someContainer.count == anotherContainer.count else {
             print("The count of items is different.")
@@ -157,13 +156,14 @@ func allItemMatch<
 }
 
 var stackOfString = StackWithTypealias<String>()
-stackOfString.push("a")
-stackOfString.push("b")
-stackOfString.push("c")
+stackOfString.push(item: "a")
+stackOfString.push(item: "b")
+stackOfString.push(item: "c")
 
 var arrayOfString = ["a", "b", "c"] /// 上面声明了 Array 遵循 Container 协议
 
 //: 即便栈和数组是不同的类型，但它们都遵循Container协议，而且它们都包含同样的类型值。因此可以调用allItemsMatch(_:_:)函数
-allItemMatch(stackOfString, arrayOfString)
+
+allItemMatch(arrayOfString, stackOfString)
 
 //: [back](Home)

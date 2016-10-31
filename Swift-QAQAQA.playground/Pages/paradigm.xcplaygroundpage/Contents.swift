@@ -5,7 +5,7 @@ By [lincode](http://lincode.github.io/Swift-Paradigm/#rd?sukey=fc78a68049a14bb28
 
 import Foundation
 
-var anotherThreeDoubles = Array(count: 3, repeatedValue: 2.5)
+var anotherThreeDoubles = Array(repeating: 2.5, count: 3)
 /*:
 过程式编程：
 - C

@@ -39,7 +39,7 @@ let userInfo = (id: "atuoOo", name: "atuoOo", age: 18, email: "aaatuooo@gmail.co
 
 if case (_, _, 0..<18, _) = userInfo {
     print("You're not allowed to register an account because you're below 18.")
-} else if case (_, _, _, let email) = userInfo where email == "" {
+} else if case (_, _, _, let email) = userInfo, email == "" {
     print("Your email is blank. Please fill in your email address.")
 } else {
     print("You are good to go!")
@@ -50,14 +50,14 @@ guard:　一个 guard 陈述，就像 if 陈述一样，依照一个表达式的
 */
 /// 隐身的可拆包的运算在代码的最后一行，因为dividend和divisor这两个参数已经被拆包并且以分别以一个常量来存储。
 func divide(dividend: Double?, by divisor: Double?) -> Double? {
-    guard let dividend = dividend else { return .None }
-    guard let divisor = divisor else { return .None }
-    guard divisor != 0 else { return .None }
+    guard let dividend = dividend else { return .none }
+    guard let divisor = divisor else { return .none }
+    guard divisor != 0 else { return .none }
     return dividend / divisor
 }
 
 func divideShort(dividend: Double?, by divisor: Double?) -> Double? {
-    guard let dividend = dividend, divisor = divisor where divisor != 0 else { return .None }
+    guard let dividend = dividend, let divisor = divisor, divisor != 0 else { return .none }
     return dividend / divisor
 }
 
@@ -100,7 +100,7 @@ public struct Thermometer {
     }
 }
 
-extension Thermometer : FloatLiteralConvertible {
+extension Thermometer : ExpressibleByFloatLiteral {
     public init(floatLiteral value: FloatLiteralType) {
         self.init(temperature: value)
     }
@@ -111,7 +111,15 @@ var thermometer: Thermometer = 56.8
 
 //: 自定义运算符
 // 运算符是^^,类型是infix（二进制），关联性是right，优先级设置成为155，原因是乘法和除法的优先级是150.
-infix operator ^^ { associativity right precedence 155 }    // 如果操作产生的结果int不能代表，如大于int.max，就会发生运行时错误
+
+precedencegroup ComparisonAssignmentPrecedence {
+    associativity: right
+    lowerThan: ComparisonPrecedence
+    higherThan: LogicalConjunctionPrecedence
+}
+
+infix operator  ^^: ComparisonAssignmentPrecedence
+// 如果操作产生的结果int不能代表，如大于int.max，就会发生运行时错误
 
 func ^^(lhs: Int, rhs: Int) -> Int {
     let l = Double(lhs)
@@ -129,25 +137,21 @@ var draw: (CGContext)->() = { _ in () }
 /// SE-0001: Allow(most) keywords as argument labels:
 // https://github.com/apple/swift-evolution/blob/master/proposals/0001-keywords-as-argument-labels.md
 
-for i in 1.stride(to: 9, by: 2) {
+for i in stride(from: 1, to: 9, by: 2) {
     print(i)    // 1 3 5 7
 }
 
 func addParameter(name: String, `inout`: Bool) { }
-var function : (String, `inout`: Bool) -> Void
+var function : (String, _ `inout`: Bool) -> Void
 
 /// SE-0011: Replace typealias keyword with associatedtype for associated type declarations
 // https://github.com/apple/swift-evolution/blob/master/proposals/0011-replace-typealias-associated.md
 
 protocol Prot {
-    associatedtype Container : SequenceType
+    associatedtype Container: Sequence
     
     // error: cannot declare type alias inside protocol, use protocol extension instead
     //    typealias Element = Container.Generator.Element
-}
-
-extension Prot {
-    typealias Element = Container.Generator.Element
 }
 
 /// SE-0014: Constraining AnySequence.init
@@ -184,11 +188,11 @@ extension UIView {
 }
 
 UIView.insertSubview(_:at:)
-UIView.insertSubview(_:aboveSub:)
+
 
 //let button = UIButton(type:) // error: use of unresolved identifier 'UIButton(type:)'
 let buttonFactory = UIButton.init(type:)   // 初始化的引用，不是初始化
-buttonFactory(type: .Custom)
+buttonFactory(.custom)
 
 // error: ↓ type 'NSDictionary' has no member 'insertSubview(_:aboveSubview:)'
 //let getter = Selector(NSDictionary.insertSubview(_:aboveSubview:))  // // produces insertSubview:aboveSubview:.
@@ -196,41 +200,41 @@ buttonFactory(type: .Custom)
 ///SE-0022: Referencing the Objective-C selector of a method
 // https://github.com/apple/swift-evolution/blob/master/proposals/0022-objc-selectors.md
 
-let sel = #selector(UIView.insertSubview(_:atIndex:))
+let sel = #selector(UIView.insertSubview(view:aboveSub:))
 
 /// deprecate ++ & --
 //for var i = 1; i <= 10; i += 1 { } // deprecates
 for i in 1...10 { }
-for i in (1...10).reverse() { }
+for i in (1...10).reversed() { }
 
 /// deprecate tuple splat 
 func foo(a: Int, b: Int) { }
-foo(13, b: 25)
+foo(a: 13, b: 25)
 
 let x = (1, b: 2)
 //foo(x)    // deprecate
 
 /// deprecate var parameter
-func sayHello(inout name: String, repeat repeatCount: Int) {
-    name = name.uppercaseString
+func sayHello(name: inout String, repeat repeatCount: Int) {
+    name = name.uppercased()
     for _ in 0 ..< repeatCount {
         print(name)
     }
 }
 var hello = "hello"
-sayHello(&hello, repeat: 2)
+sayHello(name: &hello, repeat: 2)
 
 /// add removeFirst()
 var arr = Array(1...5)
 arr.removeFirst()
 
-var nilArr = Array(count: 0, repeatedValue: 0)
+var nilArr = Array(repeating: 0, count: 0)
 //nilArr.removeFirst() // error
 //nilArr.removeLast()  // error
 nilArr.popLast()       // nil
 
 /// rename debug id: #line, #function, #file
-print("This is on line \(__LINE__)") // old - deprecated
+print("This is on line \(#line)") // old - deprecated
 print("This is on line \(#line)")
 
 //: [Back](Home)
